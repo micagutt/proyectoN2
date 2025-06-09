@@ -28,6 +28,9 @@ async function getCharacters() { //función asincrónica usando async
             const button = document.createElement("button");//Creo boton 
             button.textContent = "Ver más"; //Texto dek boton
             button.className = "ver-mas"; //Estilar en css
+            button.addEventListener("click", () => {
+                 window.location.href = `personaje.html?id=${character._id}`; //Abre pagina con otra informacion
+            })
 
             card.appendChild(img);
             card.appendChild(name);
