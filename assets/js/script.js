@@ -24,9 +24,15 @@ async function getCharacters() { //función asincrónica usando async
 
             const name = document.createElement("h2"); //titulo de las tarjetas
             name.textContent = character.name;
+            
+            const button = document.createElement("button");//Creo boton 
+            button.textContent = "Ver más"; //Texto dek boton
+            button.className = "ver-mas"; //Estilar en css
 
             card.appendChild(img);
             card.appendChild(name);
+            card.appendChild(button);
+
 
             img.onload = () => {
                 container.appendChild(card);
