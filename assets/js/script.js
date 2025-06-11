@@ -9,12 +9,12 @@ function iniciarMagia() {
 iniciarMagia().then(() => {
   const loader = document.getElementById("polvoDeHadas");
   const content = document.getElementById("magical-content");
-
-  loader.classList.remove("visible");
-  loader.classList.add("hidden");
-
-  content.classList.remove("hidden");
-  content.classList.add("visible");
+  if (loader && content) {
+    loader.classList.remove("visible");
+    loader.classList.add("hidden");
+    content.classList.remove("hidden");
+    content.classList.add("visible");
+  }
 });
 
 // Relaciona nombres o IDs con imágenes locales
@@ -26,67 +26,148 @@ const imagenesLocales = {
     "Anthony Biddle": "assets/img/disney-logo.png",
 };
 
+// Listas de ejemplo, agrega/quita nombres según tu criterio
+const personajesHumanos = [
+  "Irwina Allen", 
+  "Abdullah", 
+  "Anthony Biddle", 
+  "Admiral Boom and Mr. Binnacle", 
+  "Candace Adams",
+  "Aspen",
+  "Athena",
+  "Aunt Em",
+  "Marta Balatico",
+  "Michael Banks",
+  "Alan Coleman",
+  "Captain Anderson",
+  "Apaches",
+];
+const personajesAnimados = [
+  "Ashcan and Pete", 
+  "Baby Panda", 
+  "Achilles", 
+  "Abigail the Cow", 
+  ".GIFfany", 
+  "90's Adventure Bear", 
+  "Ahadi", 
+  "Al Muddy Sultan", 
+  "Ambrose", 
+  "Amos",
+  "Arabella Smith",
+  "Queen Ariel",
+  "Arthur and Cecil",
+  "Fiona Ashbury",
+  "Astuto",
+  "Aviarius",
+  "Prince Axel",
+  "Butter Otter",
+  "Mr. Baldwin",
+  "Baloo",
+  "Banshee",
+  "Baron Blitz",
+  "Sir Bart",
+  "Bernice Beachmont",
+  "Beardini the Pirate Magician",
+  "Beheaded Knight",
+  "Alma",
+  "Captain Amelia",
+  "Erica Ange",
+  "Angela",
+  "Apothecary Gary",
+  "Aqua",
+  "Archibald Smelding",
+  "Mr. Arrow",
+  "Queen Athena",
+];
+
+let todosLosPersonajes = []; // Variable global
+
+// Función para crear una tarjeta de personaje (NO usa innerHTML)
+function crearTarjetaPersonaje(character) {
+    const imagenPersonalizada = imagenesLocales[character.name];
+    const imageUrl = imagenPersonalizada || character.imageUrl?.trim();
+    if (!imageUrl) return null;
+
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.alt = character.name;
+    img.onerror = function () {
+        img.onerror = null;
+        img.src = "assets/img/disney-logo.png";
+    };
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const name = document.createElement("h2");
+    name.textContent = character.name;
+
+    const p = document.createElement("p");
+    const a = document.createElement("a");
+    a.href = `personaje.html?id=${character._id}`;
+    a.textContent = "Ver más";
+    p.appendChild(a);
+
+    card.appendChild(img);
+    card.appendChild(name);
+    card.appendChild(p);
+
+    return card;
+}
+
+// Función para mostrar una lista de personajes
+function mostrarPersonajes(lista) {
+    const container = document.getElementById("character-container");
+    container.innerHTML = "";
+    lista.forEach(character => {
+        const card = crearTarjetaPersonaje(character);
+        if (card) container.appendChild(card);
+    });
+}
+
+async function getCharacters() {
+    const container = document.getElementById("character-container");
+    try {
+        const response = await fetch("https://api.disneyapi.dev/character");
+        const data = await response.json();
+        todosLosPersonajes = data.data;
+        mostrarPersonajes(todosLosPersonajes); // Muestra todos por defecto
+    } catch (error) {
+        console.error("Error al obtener los personajes: ", error);
+        container.textContent = "Error al cargar personajes.";
+    }
+}
+
+// Evento para los botones de filtro
+const btnTodos = document.getElementById("btn-todos");
+if (btnTodos) {
+    btnTodos.addEventListener("click", () => {
+        mostrarPersonajes(todosLosPersonajes);
+    });
+}
+
+const btnHumanos = document.getElementById("btn-humanos");
+if (btnHumanos) {
+    btnHumanos.addEventListener("click", () => {
+        mostrarPersonajes(todosLosPersonajes.filter(p => personajesHumanos.includes(p.name)));
+    });
+}
+
+const btnAnimados = document.getElementById("btn-animados");
+if (btnAnimados) {
+    btnAnimados.addEventListener("click", () => {
+        mostrarPersonajes(todosLosPersonajes.filter(p => personajesAnimados.includes(p.name)));
+    });
+}
+
+// Ejecutar solo si existe el contenedor de personajes
 if (document.getElementById("character-container")) {
     getCharacters();
 }
 
-async function getCharacters() { //función asincrónica usando async 
-    const container = document.getElementById("character-container");
-
-    try {
-        const response = await fetch("https://api.disneyapi.dev/character"); // el await espera la respuesta de la API
-        const data = await response.json(); // lo convierto a objeto de js
-        const characters = data.data; // data: lo que contiene el array de los personajes en la API
-
-        characters.forEach(character => { //recorre los personajes 1 por 1
-            // Si tienes imágenes por nombre:
-            const imagenPersonalizada = imagenesLocales[character.name];
-            // Si prefieres por ID: const customImage = customImages[character._id];
-
-            const imageUrl = imagenPersonalizada || character.imageUrl?.trim();
-            if (!imageUrl) return;
-
-            const img = document.createElement("img");
-            img.src = imageUrl;
-            img.alt = character.name;
-
-            img.onerror = function () {
-                img.onerror = null;
-                img.src = "assets/img/disney-logo.png";
-            };
-
-            const card = document.createElement("div"); //creo la tarjeta
-            card.className = "card"; //hago que tome el css
-
-            const name = document.createElement("h2"); //titulo de las tarjetas
-            name.textContent = character.name;
-
-            // Creo el enlace para ver la página del personaje
-            const p = document.createElement("p");
-            const a = document.createElement("a");
-            a.href = `personaje.html?id=${character._id}`; // Enlace con id dinámico
-            a.textContent = "Ver más";
-            p.appendChild(a);
-
-            card.appendChild(img);
-            card.appendChild(name);
-            card.appendChild(p); // Agrega el <p> con el <a> a la tarjeta
-
-
-            img.onload = () => {
-                container.appendChild(card);
-            }
-
-
-        });
-    } catch (error) {
-        console.error("Error al obtener los personajes: ", error);
-        container.innerHTML = "<p>Error al cargar personajes.</p>";
-    }
-}
 
 // Ejecutar solo si estamos en personaje.html
-if (window.location.pathname.endsWith("personaje.html")) {
+if (window.location.pathname.includes("personaje.html")) {
     const contenedor = document.getElementById("character-detail");
     const params = new URLSearchParams(window.location.search); // lee los signos que estan despues de ? en la URL
     const id = params.get("id");
