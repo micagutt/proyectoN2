@@ -8,8 +8,9 @@ body {
   font-family: 'IM Fell English SC', serif;
   margin: 0;
   padding: 1.25rem;
-  background: radial-gradient(circle at top, #3c87ff, #b9e2fc);
+  background:  #3c87ff;
 }
+
 /* carga pendiente */
 #polvoDeHadas,
 #magical-content {
@@ -107,6 +108,16 @@ header {
 }
 
 /* botones */
+#filtros-personajes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  color: #ffffff;
+}
 #filtros-personajes h4 {
   text-align: center;
   color: #ffffff;
@@ -160,6 +171,13 @@ header {
  transform: scale(1.05);
 }
 
+.filtro-activo {
+  background: #003a90 !important;
+  color: #fff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
 /* Section */
 h1 {
   text-align: center;
@@ -168,12 +186,11 @@ h1 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* antes 220px */
-  /* Puedes subir a 320px, 350px, etc. si quieres aún más anchas */
-  max-width: 100vw; /* O quita esta línea si quieres que ocupe todo */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 100vw; 
   margin: 2rem auto 0 auto;
   gap: 1.25rem;
-  padding: 0 1rem; /* Opcional: agrega padding lateral para que no pegue al borde */
+  padding: 0 1rem; 
 }
 
 @media (min-width: 1200px) {
@@ -199,11 +216,13 @@ h1 {
 
 .card img {
   width: 100%;
-  height: 220px; /* antes 180px */
-  object-fit: cover;
-  border-radius: 12px;
+  height: auto;             
+  object-fit: contain;     
+  max-height: 220px;         
   background: #eee;
+  border-radius: 12px;
   display: block;
+  margin: 0 auto;
 }
 
 .card h2 {
@@ -246,8 +265,8 @@ h1 {
 }
 
 .card a {
-  text-decoration: none;
-  color: #7b1fa2;
+  text-decoration: underline;
+  color: #033767;
   display: inline-block;
   margin-top: 0.5rem;
   font-weight: bold;
@@ -257,4 +276,81 @@ h1 {
 .card a:hover {
   text-decoration: underline;
 }
+
+/* personaje.html */
+.personaje-detalle {
+  background: #f0f6ff;
+  border: 4px solid #002b6a;
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  margin: 2rem auto;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.personaje-detalle h1 {
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.personaje-detalle img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 320px;
+  margin-bottom: 1.2rem;
+  border-radius: 8px;
+  background: #eee;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+}
+
+.personaje-detalle p {
+  font-size: 1.1rem;
+  color: #000000;
+  background: #e6eaff;
+  border-radius: 6px;
+  padding: 0.6em 1em;
+  margin: 0.6em 0;
+  font-family: 'IM Fell English SC', serif;
+  text-align: left;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* animación */
+.destello {
+  position: fixed;
+  z-index: 999;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe6 60%, #fffa98 100%);
+  box-shadow: 0 0 16px 8px #fff3b8, 0 0 32px 16px #fff690;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: destello-magico 1.2s linear forwards;
+}
+
+@keyframes destello-magico {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.7) translateY(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-60px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-120px);
+  }
+}
+
 
