@@ -1,10 +1,23 @@
-if (document.getElementById("character-container")) {
-    getCharacters();
+function iniciarMagia() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hechizo completo");
+    }, 2000); // 2 segundos de animación
+  });
 }
 
-async function getCharacters() { //función asincrónica usando async 
-const container = document.getElementById("character-container");
-    // Relaciona nombres o IDs con imágenes locales
+iniciarMagia().then(() => {
+  const loader = document.getElementById("polvoDeHadas");
+  const content = document.getElementById("magical-content");
+
+  loader.classList.remove("visible");
+  loader.classList.add("hidden");
+
+  content.classList.remove("hidden");
+  content.classList.add("visible");
+});
+
+// Relaciona nombres o IDs con imágenes locales
 const imagenesLocales = {
     "Irwina Allen": "assets/img/disney-logo.png",
     "Abdullah": "assets/img/disney-logo.png",
@@ -12,6 +25,14 @@ const imagenesLocales = {
     "Baby Panda": "assets/img/disney-logo.png",
     "Anthony Biddle": "assets/img/disney-logo.png",
 };
+
+if (document.getElementById("character-container")) {
+    getCharacters();
+}
+
+async function getCharacters() { //función asincrónica usando async 
+    const container = document.getElementById("character-container");
+
     try {
         const response = await fetch("https://api.disneyapi.dev/character"); // el await espera la respuesta de la API
         const data = await response.json(); // lo convierto a objeto de js
@@ -76,9 +97,12 @@ if (window.location.pathname.endsWith("personaje.html")) {
             const data = await response.json();
             const character = data.data;
 
+            const imagenPersonalizada = imagenesLocales[character.name];
+            const imageUrl = imagenPersonalizada || character.imageUrl?.trim();
+
             contenedor.innerHTML = `
                 <h1>${character.name}</h1>
-                <img src="${character.imageUrl}" alt="${character.name}">
+                <img src="${imageUrl}" alt="${character.name}">
                 <p><strong>Películas:</strong> ${character.films.join(", ") || "Solo tiene serie"}</p>
                 <p><strong>Series:</strong> ${character.tvShows.join(", ") || "Solo tiene película"}</p>
                 <p><strong>Videojuego:</strong> ${character.videoGames.join(", ") || "No aparece en ningún videojuego"}</p>

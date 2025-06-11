@@ -1,42 +1,119 @@
 body {
-    font-family: Helvetica, sans-serif;
-    margin: 0;
-    padding: 1.25rem;
-    background-color: #c2dcf3;
+  font-family: Helvetica, sans-serif;
+  margin: 0;
+  padding: 1.25rem;
+  background-color: #c2dcf3;
+}
+
+#polvoDeHadas,
+#magical-content {
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#polvoDeHadas.visible {
+  opacity: 1;
+  visibility: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #0c0727, #070326);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+#polvoDeHadas.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#polvoDeHadas p {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #dcceff;
+}
+
+.particulas::before,
+.particles::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fdfd96;
+  box-shadow:
+    50px 80px #ffd6ff,
+    100px 40px #fcd1ff,
+    150px 120px #ffe5ec,
+    200px 20px #ffffff,
+    250px 100px #f5f5dc,
+    300px 50px #e0ffff,
+    350px 150px #e6e6fa;
+  animation: sparkle 2s linear infinite;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
   }
-  
-  h1 {
-    text-align: center;
-    color: #101010;
+
+  100% {
+    transform: translateY(-100px) scale(0.5);
+    opacity: 0;
   }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1.25rem;
-    margin-top: 1.875rem;
-  }
-  
-  .card {
-    background-color: #f3e6e6;
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .card h2 {
-    font-size: 1rem;
-    margin-top: 10px;
-  }
+}
+
+#magical-content {
+  opacity: 0;
+  visibility: hidden;
+  padding: 2rem;
+  text-align: center;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#magical-content.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+h1 {
+  text-align: center;
+  color: #101010;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.875rem;
+}
+
+.card {
+  background-color: #f3e6e6;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.card h2 {
+  font-size: 1rem;
+  margin-top: 10px;
+}
