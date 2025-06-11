@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Personajes Disney</title>
     <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
@@ -14,22 +14,30 @@
         <p>Polvo de hadas en camino...</p>
     </div>
 
-    <div id="magical-content" class="hidden">
-        <h1>🌟 Bienvenido al Reino Encantado 🌟</h1>
-        <p>Tu hechizo se ha completado con éxito.</p>
-    </div>
+    <header>
+        <div id="magical-content" class="hidden">
+            <h1>🌟 Bienvenido al Reino Encantado 🌟</h1>
+            <h3>Conocé los diferentes personajes de Disney</h3>
+        </div>
+    </header>
 
-    <h1>Conocé los diferentes personajes de Disney</h1>
+    <main>
 
-    <div id="filtros-personajes">
-        <h4>Encontralo más rápido:</h4>
-        <button id="btn-todos">Todos</button>
-        <button id="btn-humanos">Humanos</button>
-        <button id="btn-animados">Animados</button>
-    </div>
+        <section id="filtros-personajes">
+            <h4>Encontralos más rápido:</h4>
+            <div id="filtros-botones">
+                <button id="btn-todos">Todos</button>
+                <button id="btn-humanos">Humanos</button>
+                <button id="btn-animados">Animados</button>
+            </div>
+        </section>
 
-    <div id="character-container" class="grid">
-    </div>
+
+        <section id="personajes-section">
+            <div id="character-container" class="grid"></div>
+        </section>
+    </main>
+
     <script src="assets/js/script.js"></script>
 </body>
 

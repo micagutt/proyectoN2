@@ -17,7 +17,7 @@ iniciarMagia().then(() => {
   }
 });
 
-// Relaciona nombres o IDs con imágenes locales
+// Cambia a la imagen de Disney
 const imagenesLocales = {
     "Irwina Allen": "assets/img/disney-logo.png",
     "Abdullah": "assets/img/disney-logo.png",
@@ -26,7 +26,7 @@ const imagenesLocales = {
     "Anthony Biddle": "assets/img/disney-logo.png",
 };
 
-// Listas de ejemplo, agrega/quita nombres según tu criterio
+// Array de personajes humanos y animados
 const personajesHumanos = [
   "Irwina Allen", 
   "Abdullah", 
@@ -80,9 +80,8 @@ const personajesAnimados = [
   "Queen Athena",
 ];
 
-let todosLosPersonajes = []; // Variable global
+let todosLosPersonajes = [];
 
-// Función para crear una tarjeta de personaje (NO usa innerHTML)
 function crearTarjetaPersonaje(character) {
     const imagenPersonalizada = imagenesLocales[character.name];
     const imageUrl = imagenPersonalizada || character.imageUrl?.trim();
@@ -115,7 +114,7 @@ function crearTarjetaPersonaje(character) {
     return card;
 }
 
-// Función para mostrar una lista de personajes
+// Mustra la lista de los personajes
 function mostrarPersonajes(lista) {
     const container = document.getElementById("character-container");
     container.innerHTML = "";
@@ -138,7 +137,7 @@ async function getCharacters() {
     }
 }
 
-// Evento para los botones de filtro
+// evento para los filtros
 const btnTodos = document.getElementById("btn-todos");
 if (btnTodos) {
     btnTodos.addEventListener("click", () => {
@@ -160,13 +159,13 @@ if (btnAnimados) {
     });
 }
 
-// Ejecutar solo si existe el contenedor de personajes
+
 if (document.getElementById("character-container")) {
     getCharacters();
 }
 
 
-// Ejecutar solo si estamos en personaje.html
+// Parte personaje.html
 if (window.location.pathname.includes("personaje.html")) {
     const contenedor = document.getElementById("character-detail");
     const params = new URLSearchParams(window.location.search); // lee los signos que estan despues de ? en la URL
