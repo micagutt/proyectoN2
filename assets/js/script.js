@@ -228,6 +228,8 @@ if (window.location.pathname.includes("personaje.html")) {
         } catch (error) {
             alert("No puede cargar la info del personaje");// Por si llega a haber un error
             console.error("Error al obtener el personaje: ", error);
+            console.log("ID del personaje:", id);
+            contenedor.innerHTML = "<p>Error al cargar el personaje.</p>";
         }
     }
 
